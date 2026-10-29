@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css?family=Changa+One");
+@import url("https://fonts.googleapis.com/css?family=Imprima");
+
+html, body, ytd-app, #content, #page-manager, yt-live-chat-app,
+yt-live-chat-renderer, yt-live-chat-item-list-renderer,
+yt-live-chat-item-list-renderer #items,
+yt-live-chat-item-list-renderer #item-scroller {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body {
+  overflow: hidden !important;
+}
+
+yt-live-chat-text-message-renderer,
+yt-live-chat-text-message-renderer[is-highlighted],
+yt-live-chat-text-message-renderer[author-type="owner"],
+yt-live-chat-text-message-renderer[author-type="owner"][is-highlighted],
+yt-live-chat-text-message-renderer[author-type="moderator"],
+yt-live-chat-text-message-renderer[author-type="moderator"][is-highlighted],
+yt-live-chat-text-message-renderer[author-type="member"],
+yt-live-chat-text-message-renderer[author-type="member"][is-highlighted],
+yt-live-chat-author-chip #author-name {
+  background-color: transparent !important;
+}
+
+yt-live-chat-renderer * {
+  text-shadow: -2px -2px #000, -2px 0 #000, -2px 2px #000,
+               0 -2px #000, 0 2px #000, 2px -2px #000,
+               2px 0 #000, 2px 2px #000;
+  font-family: "Imprima", sans-serif;
+  font-size: 12px !important;
+  line-height: normal !important;
+}
+
+yt-live-chat-text-message-renderer #content,
+yt-live-chat-legacy-paid-message-renderer #content {
+  overflow: initial !important;
+}
+
+yt-live-chat-item-list-renderer #items,
+yt-live-chat-item-list-renderer #item-scroller {
+  overflow: hidden !important;
+}
+
+yt-live-chat-header-renderer,
+yt-live-chat-message-input-renderer,
+yt-live-chat-renderer #input-panel,
+yt-live-chat-renderer #chat-input,
+yt-live-chat-renderer #footer,
+yt-live-chat-text-message-renderer #author-badges,
+yt-live-chat-moderation-message-renderer,
+yt-live-chat-ticker-renderer,
+yt-live-chat-mode-change-message-renderer,
+yt-live-chat-viewer-engagement-message-renderer,
+yt-live-chat-restricted-participation-renderer,
+yt-live-chat-banner-manager,
+yt-live-chat-action-panel-renderer,
+yt-live-chat-renderer #action-panel,
+yt-reaction-control-panel-overlay,
+yt-reaction-control-panel-overlay-view-model,
+yt-reaction-control-panel-view-model,
+yt-live-chat-text-message-renderer[is-deleted],
+yt-live-chat-legacy-paid-message-renderer[is-deleted] {
+  display: none !important;
+}
+
+yt-live-chat-text-message-renderer,
+yt-live-chat-legacy-paid-message-renderer,
+yt-live-chat-paid-message-renderer #header {
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+
+yt-live-chat-text-message-renderer #author-photo,
+yt-live-chat-paid-message-renderer #author-photo,
+yt-live-chat-legacy-paid-message-renderer #author-photo {
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 20px !important;
+  margin-right: 5px !important;
+}
+
+yt-live-chat-text-message-renderer #timestamp {
+  color: #999 !important;
+  font-family: "Imprima", sans-serif;
+  font-size: 10px !important;
+  line-height: 10px !important;
+}
+
+yt-live-chat-text-message-renderer #author-name {
+  color: #ccc !important;
+  font-family: "Changa One", sans-serif;
+  font-size: 14px !important;
+  line-height: 14px !important;
+}
+
+yt-live-chat-text-message-renderer #author-name::after {
+  content: ":";
+  margin-left: 2px;
+}
+
+yt-live-chat-text-message-renderer #author-name[type="owner"],
+yt-live-chat-text-message-renderer #author-name.owner,
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="owner"] {
+  color: #ffd600 !important;
+}
+
+yt-live-chat-text-message-renderer #author-name[type="moderator"],
+yt-live-chat-text-message-renderer #author-name.moderator,
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="moderator"] {
+  color: #5e84f1 !important;
+}
+
+yt-live-chat-text-message-renderer #author-name[type="member"],
+yt-live-chat-text-message-renderer #author-name.member,
+yt-live-chat-text-message-renderer yt-live-chat-author-badge-renderer[type="member"] {
+  color: #0f9d58 !important;
+}
+
+yt-live-chat-text-message-renderer #message,
+yt-live-chat-text-message-renderer #message * {
+  color: #fff !important;
+  font-family: "Imprima", sans-serif;
+  font-size: 12px !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
+}
+
+yt-live-chat-paid-message-renderer #author-name,
+yt-live-chat-paid-message-renderer #author-name *,
+yt-live-chat-legacy-paid-message-renderer #event-text,
+yt-live-chat-legacy-paid-message-renderer #event-text * {
+  color: #fff !important;
+  font-family: "Changa One", sans-serif;
+  font-size: 14px !important;
+  line-height: 14px !important;
+}
+
+yt-live-chat-paid-message-renderer #purchase-amount,
+yt-live-chat-paid-message-renderer #purchase-amount *,
+yt-live-chat-legacy-paid-message-renderer #detail-text,
+yt-live-chat-legacy-paid-message-renderer #detail-text *,
+yt-live-chat-paid-message-renderer #content,
+yt-live-chat-paid-message-renderer #content * {
+  color: #fff !important;
+  font-family: "Imprima", sans-serif;
+  font-size: 12px !important;
+  line-height: 12px !important;
+}
+
+yt-live-chat-paid-message-renderer {
+  margin: 4px 0 !important;
+}
+
+yt-live-chat-legacy-paid-message-renderer {
+  background-color: #0f9d58 !important;
+  margin: 4px 0 !important;
+}
+
+yt-live-chat-text-message-renderer a,
+yt-live-chat-legacy-paid-message-renderer a {
+  text-decoration: none !important;
+}
