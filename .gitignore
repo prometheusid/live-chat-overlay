@@ -2,6 +2,9 @@
 bin/
 obj/
 
+# Release archive
+LiveChatOverlay-v1.0.0-Windows-x64.zip
+
 # Visual Studio and user-specific files
 .vs/
 *.user

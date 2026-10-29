@@ -23,6 +23,10 @@ still be installed separately. WebView2 is used to render YouTube chat.
 
 ## Quick start
 
+Download the latest Windows x64 build from the
+[v1.0.0 GitHub Release](https://github.com/prometheusid/live-chat-overlay/releases/tag/v1.0.0).
+Extract the ZIP, then:
+
 1. Start `LiveChatOverlay.exe`.
 2. Open the YouTube stream and its live chat pop-out.
 3. Copy the live chat page URL and paste it into the overlay's URL field.
@@ -139,6 +143,10 @@ tetap harus dipasang secara terpisah. WebView2 digunakan untuk menampilkan chat
 YouTube.
 
 ## Cara cepat menggunakan
+
+Unduh build Windows x64 dari
+[GitHub Release v1.0.0](https://github.com/prometheusid/live-chat-overlay/releases/tag/v1.0.0).
+Ekstrak file ZIP, lalu:
 
 1. Jalankan `LiveChatOverlay.exe`.
 2. Buka stream YouTube dan pop-out live chat-nya.
