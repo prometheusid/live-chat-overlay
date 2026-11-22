@@ -30,7 +30,7 @@ yt-live-chat-renderer * {
                0 -2px #000, 0 2px #000, 2px -2px #000,
                2px 0 #000, 2px 2px #000;
   font-family: "Imprima", sans-serif;
-  font-size: 12px !important;
+  font-size: var(--chat-body-font-size) !important;
   line-height: normal !important;
 }
 
@@ -85,15 +85,15 @@ yt-live-chat-legacy-paid-message-renderer #author-photo {
 yt-live-chat-text-message-renderer #timestamp {
   color: #999 !important;
   font-family: "Imprima", sans-serif;
-  font-size: 10px !important;
-  line-height: 10px !important;
+  font-size: var(--chat-timestamp-font-size) !important;
+  line-height: var(--chat-timestamp-line-height) !important;
 }
 
 yt-live-chat-text-message-renderer #author-name {
   color: #ccc !important;
   font-family: "Changa One", sans-serif;
-  font-size: 14px !important;
-  line-height: 14px !important;
+  font-size: var(--chat-author-font-size) !important;
+  line-height: var(--chat-author-line-height) !important;
 }
 
 yt-live-chat-text-message-renderer #author-name::after {
@@ -123,7 +123,7 @@ yt-live-chat-text-message-renderer #message,
 yt-live-chat-text-message-renderer #message * {
   color: #fff !important;
   font-family: "Imprima", sans-serif;
-  font-size: 12px !important;
+  font-size: var(--chat-body-font-size) !important;
   line-height: normal !important;
   letter-spacing: normal !important;
 }
@@ -134,8 +134,8 @@ yt-live-chat-legacy-paid-message-renderer #event-text,
 yt-live-chat-legacy-paid-message-renderer #event-text * {
   color: #fff !important;
   font-family: "Changa One", sans-serif;
-  font-size: 14px !important;
-  line-height: 14px !important;
+  font-size: var(--chat-author-font-size) !important;
+  line-height: var(--chat-author-line-height) !important;
 }
 
 yt-live-chat-paid-message-renderer #purchase-amount,
@@ -146,8 +146,8 @@ yt-live-chat-paid-message-renderer #content,
 yt-live-chat-paid-message-renderer #content * {
   color: #fff !important;
   font-family: "Imprima", sans-serif;
-  font-size: 12px !important;
-  line-height: 12px !important;
+  font-size: var(--chat-body-font-size) !important;
+  line-height: var(--chat-body-line-height) !important;
 }
 
 yt-live-chat-paid-message-renderer {

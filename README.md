@@ -7,6 +7,8 @@ with C# and WPF, and uses Microsoft Edge WebView2 to display the chat.
 
 - Borderless, transparent, always-on-top window.
 - YouTube live chat styling with a transparent page background.
+- Adjustable chat text size from 80% to 150%, saved locally.
+- Resizable from the right and bottom edges or the bottom-right corner.
 - Click-through mode, toggled from the toolbar or with **Ctrl+Shift+O**.
 - Draggable handle in the top-left corner; disable click-through before moving.
 - Starts with an empty URL field and on-screen setup instructions.
@@ -31,13 +33,16 @@ Extract the ZIP, then:
 2. Open the YouTube stream and its live chat pop-out.
 3. Copy the live chat page URL and paste it into the overlay's URL field.
 4. Select **Load**.
-5. Position the overlay using the dotted handle in the top-left corner.
-6. Enable **Click-through** or press **Ctrl+Shift+O** when you want mouse input
+5. Select **Aa** in the toolbar to adjust the chat text size.
+6. Position the overlay using the dotted handle in the top-left corner.
+7. Drag the right or bottom edge to resize the overlay; drag the bottom-right
+   corner to resize both dimensions.
+8. Enable **Click-through** or press **Ctrl+Shift+O** when you want mouse input
    to pass through to the game.
 
-To move the window or use its toolbar, turn click-through off first. When
-click-through is enabled, use **Ctrl+Shift+O** to turn it off because mouse
-clicks are passed to the window underneath.
+To move or resize the window or use its toolbar, turn click-through off first.
+When click-through is enabled, use **Ctrl+Shift+O** to turn it off because
+mouse clicks are passed to the window underneath.
 
 For games, **Borderless Windowed** is generally the most compatible display
 mode. Exclusive fullscreen may cover desktop overlays.
@@ -78,6 +83,8 @@ versioned GitHub Release if you want to distribute a ready-to-run build.
   and Windows.
 - **The overlay will not move:** turn off click-through, then drag the dotted
   handle in the top-left corner.
+- **The overlay will not resize:** turn off click-through, then drag its right
+  edge, bottom edge, or bottom-right corner.
 - **The toolbar does not respond:** click-through may be enabled. Press
   **Ctrl+Shift+O** to toggle it off.
 
@@ -126,6 +133,8 @@ Microsoft Edge WebView2 untuk menampilkan chat.
 
 - Jendela tanpa border, transparan, dan selalu di atas.
 - Styling YouTube Live Chat dengan latar halaman transparan.
+- Ukuran teks chat dapat diatur dari 80% hingga 150% dan disimpan secara lokal.
+- Ukuran jendela dapat diubah dari sisi kanan, sisi bawah, atau sudut kanan bawah.
 - Mode click-through dari toolbar atau shortcut **Ctrl+Shift+O**.
 - Pegangan titik di pojok kiri atas untuk menggeser jendela; matikan
   click-through sebelum menggeser.
@@ -152,13 +161,17 @@ Ekstrak file ZIP, lalu:
 2. Buka stream YouTube dan pop-out live chat-nya.
 3. Salin URL halaman live chat, lalu tempel ke kolom URL overlay.
 4. Klik **Load**.
-5. Atur posisi overlay dengan pegangan titik di pojok kiri atas.
-6. Aktifkan **Click-through** atau tekan **Ctrl+Shift+O** agar klik mouse
+5. Klik **Aa** di toolbar untuk mengatur ukuran teks chat.
+6. Atur posisi overlay dengan pegangan titik di pojok kiri atas.
+7. Seret sisi kanan atau bawah untuk mengubah ukuran overlay; seret sudut kanan
+   bawah untuk mengubah keduanya.
+8. Aktifkan **Click-through** atau tekan **Ctrl+Shift+O** agar klik mouse
    diteruskan ke game.
 
-Untuk menggeser jendela atau menggunakan toolbar, matikan click-through
-terlebih dahulu. Saat click-through aktif, gunakan **Ctrl+Shift+O** untuk
-menonaktifkannya karena klik mouse diteruskan ke jendela di bawah overlay.
+Untuk menggeser atau mengubah ukuran jendela maupun menggunakan toolbar,
+matikan click-through terlebih dahulu. Saat click-through aktif, gunakan
+**Ctrl+Shift+O** untuk menonaktifkannya karena klik mouse diteruskan ke jendela
+di bawah overlay.
 
 Untuk bermain game, mode **Borderless Windowed** umumnya paling kompatibel.
 Exclusive fullscreen dapat menutupi overlay desktop.
@@ -199,6 +212,8 @@ bernomor versi jika ingin membagikan build siap pakai.
   game dan Windows.
 - **Overlay tidak bisa digeser:** matikan click-through, lalu seret pegangan
   titik di pojok kiri atas.
+- **Ukuran overlay tidak bisa diubah:** matikan click-through, lalu seret sisi
+  kanan, sisi bawah, atau sudut kanan bawah.
 - **Toolbar tidak merespons:** click-through mungkin sedang aktif. Tekan
   **Ctrl+Shift+O** untuk menonaktifkannya.
 

@@ -1,9 +1,11 @@
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 
@@ -16,12 +18,19 @@ public partial class MainWindow : Window
     private const uint ModShift = 0x0004;
     private const int WmHotkey = 0x0312;
     private static readonly string YoutubeChatCss = LoadYoutubeChatCss();
+    private static readonly string SettingsFilePath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "LiveChatOverlay",
+        "settings.json");
+    private int _fontSizePercent = 100;
     private bool _hotkeyRegistered;
     private HwndSource? _source;
 
     public MainWindow()
     {
         InitializeComponent();
+        _fontSizePercent = LoadFontSizePercent();
+        TextSizeComboBox.SelectedValue = _fontSizePercent.ToString(CultureInfo.InvariantCulture);
         UpdateUrlPlaceholder();
     }
 
@@ -31,6 +40,60 @@ public partial class MainWindow : Window
             ?? throw new InvalidOperationException("YouTube chat CSS resource was not found.");
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd();
+    }
+
+    private static int LoadFontSizePercent()
+    {
+        if (!File.Exists(SettingsFilePath))
+        {
+            return 100;
+        }
+
+        try
+        {
+            var settings = JsonSerializer.Deserialize<UserSettings>(File.ReadAllText(SettingsFilePath));
+            if (settings is null
+                || settings.FontSizePercent < 80
+                || settings.FontSizePercent > 150
+                || settings.FontSizePercent % 10 != 0)
+            {
+                MessageBox.Show(
+                    "The saved chat text size is invalid. The default size will be used.",
+                    "Invalid settings",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return 100;
+            }
+
+            return settings.FontSizePercent;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
+        {
+            MessageBox.Show(
+                $"The saved chat text size could not be loaded. The default size will be used.\n\n{ex.Message}",
+                "Unable to load settings",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return 100;
+        }
+    }
+
+    private void SaveFontSizePercent()
+    {
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(SettingsFilePath)!);
+            var settings = new UserSettings { FontSizePercent = _fontSizePercent };
+            File.WriteAllText(SettingsFilePath, JsonSerializer.Serialize(settings));
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            MessageBox.Show(
+                $"The chat text size could not be saved.\n\n{ex.Message}",
+                "Unable to save settings",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+        }
     }
 
     private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -176,12 +239,32 @@ public partial class MainWindow : Window
             return;
         }
 
+        await ApplyChatStylesAsync();
+
+        InitialHint.Visibility = Visibility.Collapsed;
+    }
+
+    private async Task ApplyChatStylesAsync()
+    {
         if (ChatView.CoreWebView2 is null)
         {
             return;
         }
 
-        var css = JsonSerializer.Serialize(YoutubeChatCss);
+        var scale = _fontSizePercent / 100d;
+        var css = $$"""
+            {{YoutubeChatCss}}
+
+            :root {
+              --chat-body-font-size: {{FormatFontSize(12 * scale)}};
+              --chat-body-line-height: {{FormatFontSize(12 * scale)}};
+              --chat-author-font-size: {{FormatFontSize(14 * scale)}};
+              --chat-author-line-height: {{FormatFontSize(14 * scale)}};
+              --chat-timestamp-font-size: {{FormatFontSize(10 * scale)}};
+              --chat-timestamp-line-height: {{FormatFontSize(10 * scale)}};
+            }
+            """;
+        var serializedCss = JsonSerializer.Serialize(css);
         var script = $$"""
             (() => {
               const styleId = "live-chat-overlay-youtube-style";
@@ -193,7 +276,7 @@ public partial class MainWindow : Window
                 if (nonceSource?.nonce) style.nonce = nonceSource.nonce;
                 (document.head || document.documentElement).appendChild(style);
               }
-              style.textContent = {{css}};
+              style.textContent = {{serializedCss}};
               return true;
             })();
             """;
@@ -214,8 +297,48 @@ public partial class MainWindow : Window
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);
         }
+    }
 
-        InitialHint.Visibility = Visibility.Collapsed;
+    private static string FormatFontSize(double size)
+    {
+        return $"{size.ToString("0.##", CultureInfo.InvariantCulture)}px";
+    }
+
+    private void TextSizeButton_Click(object sender, RoutedEventArgs e)
+    {
+        TextSizePopup.IsOpen = !TextSizePopup.IsOpen;
+    }
+
+    private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        if (TextSizePopup.IsOpen
+            && !TextSizeButton.IsMouseOver
+            && !TextSizePopup.IsMouseOver
+            && !TextSizeComboBox.IsMouseOver
+            && !TextSizeComboBox.IsDropDownOpen)
+        {
+            TextSizePopup.IsOpen = false;
+        }
+    }
+
+    private void Window_Deactivated(object? sender, EventArgs e)
+    {
+        TextSizePopup.IsOpen = false;
+    }
+
+    private async void TextSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded
+            || TextSizeComboBox.SelectedItem is not ComboBoxItem selectedItem
+            || !int.TryParse(selectedItem.Tag?.ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out var fontSizePercent)
+            || fontSizePercent == _fontSizePercent)
+        {
+            return;
+        }
+
+        _fontSizePercent = fontSizePercent;
+        SaveFontSizePercent();
+        await ApplyChatStylesAsync();
     }
 
     private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -225,6 +348,22 @@ public partial class MainWindow : Window
             DragMove();
             e.Handled = true;
         }
+    }
+
+    private void ResizeRight_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+        Width = Math.Max(MinWidth, Width + e.HorizontalChange);
+    }
+
+    private void ResizeBottom_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+        Height = Math.Max(MinHeight, Height + e.VerticalChange);
+    }
+
+    private void ResizeCorner_DragDelta(object sender, DragDeltaEventArgs e)
+    {
+        Width = Math.Max(MinWidth, Width + e.HorizontalChange);
+        Height = Math.Max(MinHeight, Height + e.VerticalChange);
     }
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -246,6 +385,15 @@ public partial class MainWindow : Window
     private const int GwlExStyle = -20;
     private const long WsExTransparent = 0x00000020L;
     private const long WsExLayered = 0x00080000L;
+
+    private sealed class UserSettings
+    {
+        public UserSettings()
+        {
+        }
+
+        public int FontSizePercent { get; set; }
+    }
 
     [DllImport("user32.dll", SetLastError = true)]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint modifiers, uint virtualKey);
